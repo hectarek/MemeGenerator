@@ -58,17 +58,25 @@
         const memeButton = document.getElementById("meme-button");
 
         async function getMeme() {
-            const result = await fetch(`https://api.imgflip.com/get_memes`);
-            const meme = await result.json();
-
-            return meme.data.memes;
+            try {
+                const result = await fetch(`https://api.imgflip.com/get_memes`);
+                const meme = await result.json();
+                return meme.data.memes;
+            } catch (error) {
+                console.log(error);
+            }
+            
         }
 
         async function getRandomMeme() {
-            const meme = await getMeme();
-            let rand = Math.round(Math.random()*100);
-            let imagePath = meme[rand].url;
-            imageBox.src = imagePath;
+            try {
+                const meme = await getMeme();
+                let rand = Math.round(Math.random()*100);
+                let imagePath = meme[rand].url;
+                imageBox.src = imagePath;
+            } catch (error) {
+                console.log(error);
+            }
         }
 
         memeButton.addEventListener("click", getRandomMeme);
